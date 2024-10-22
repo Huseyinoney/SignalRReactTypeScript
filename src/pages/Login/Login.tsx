@@ -3,7 +3,7 @@ import { NavigateFunction, useNavigate } from "react-router-dom";
 import { RootState } from "../../redux/store";
 import { useAppDispatch, useAppSelector } from "../../redux/Hooks";
 import { ClearOldMessageState, LoginAsync } from "../../redux/features/Auth/AuthSlice";
-import { shallowEqual } from "react-redux";
+
 
 
 const Login: FC = () => {
@@ -11,20 +11,21 @@ const Login: FC = () => {
     const UseNavigate: NavigateFunction = useNavigate()
     const [Username, setUsername] = useState<string>("")
     const dispatch = useAppDispatch()
-    const { Message, isAuth } = useAppSelector((state: RootState) => ({
-        Message: state.auth.Message,
-        isAuth: state.auth.isAuth
-    }), shallowEqual
-    );
+    const { hubConnection } = useAppSelector((state: RootState) => state.signalR)
+    const { user, isAuth, Message } = useAppSelector((state: RootState) => state.auth);
+
 
     const LoginFunction = () => {
+
         dispatch(LoginAsync(Username))
     }
 
     useEffect(() => {
 
-        if (isAuth == true) {
+        if (isAuth == true && user) {
             UseNavigate("/Home")
+            hubConnection?.invoke("Connect", user.id);
+            console.log(user)
         }
         else {
             if (Message != null) {
@@ -33,7 +34,7 @@ const Login: FC = () => {
                 setUsername("")
             }
         }
-    }, [isAuth, Message])
+    }, [isAuth, Message, user, hubConnection, dispatch, UseNavigate])
 
     return (
         <div className="Main">
