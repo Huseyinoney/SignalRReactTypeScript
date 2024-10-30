@@ -18,7 +18,7 @@ const UserListObject: FC<UserProp> = ({ userProp }) => {
     }
 
     return (
-        <div className="UserListObject">
+        <div className="UserListObject d-flex mt-3">
             <Button variant="success" onClick={SelectUserHandle}>
                 {[userProp.name + " ", userProp.id + " ", userProp.status]}
             </Button>

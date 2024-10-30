@@ -1,14 +1,13 @@
 import { HubConnection } from "@microsoft/signalr";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import { User } from "../../../types/types";
+import { Chat, User } from "../../../types/types";
 
 export interface MessageState {
 
     hubConnection: HubConnection | null
-    messages: string[] | null,
+    messages: Chat[] | null,
     users: User[]
-
 }
 
 const initialState: MessageState = {
@@ -16,7 +15,6 @@ const initialState: MessageState = {
     messages: [],
     hubConnection: null,
     users: []
-
 }
 
 interface SendMessagePayload {
@@ -52,12 +50,12 @@ const MessageSlice = createSlice({
         setUsers: (state, action: PayloadAction<User[]>) => {
             state.users = action.payload;
         },
-        addMessage: (state, action: PayloadAction<string>) => {
+        addMessage: (state, action: PayloadAction<Chat>) => {
             state.messages?.push(action.payload);
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(SendMessageToUserAsync.fulfilled, (state, action: PayloadAction) => {
+        builder.addCase(SendMessageToUserAsync.fulfilled, _ => {
 
         });
     }

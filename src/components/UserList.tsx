@@ -15,6 +15,7 @@ const UserList: FC<UserList> = ({ Users = [] }) => {
         <div className="UserList">
             {Array.isArray(Users) && Users.length > 0 ? ( // Check if Users is an array
                 Users.filter((u: User) => u.id !== user.id).map((filteredUser: User, index: number) => (
+                    
                     <UserListObject key={index} userProp={filteredUser} />
                 ))
             ) : (
