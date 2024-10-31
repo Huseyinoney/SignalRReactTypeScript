@@ -8,7 +8,6 @@ import { Button } from "react-bootstrap";
 import { LogOutAsync } from "../../redux/features/Auth/AuthSlice";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 
-
 const Home: FC = () => {
   const { user, isAuth } = useAppSelector((state: RootState) => state.auth);
   const { hubConnection, users } = useAppSelector((state: RootState) => state.Message)
@@ -46,15 +45,20 @@ const Home: FC = () => {
   }, [isAuth, user])
 
   return (
-    <div className="App d-flex align-items-start flex-column justify-content-start me-auto">
-      <Button onClick={LogOut}>LogOut</Button>
-      <header className="App-header ">
+    <div className="App">
+      <div className="LogOutButtonContainer">
+      <Button className="LogOutButton" onClick={LogOut}>LogOut</Button>
+      </div>
+      <div className="App-header d-flex  justify-content-start">
         {/* <input value={message} onChange={(e) => setMessage(e.target.value)} />
         <button onClick={SendMessage}>Mesaj Gönder</button> */}
         <div>
           <div className="UserList">
-            <h2>Kullanıcılar</h2>
-            <UserList Users={users} />
+            <div>
+              <h2>Kullanıcılar</h2>
+              <UserList Users={users} />
+            </div>
+            <div></div>
           </div>
           {/* <h2>Mesaj Listesi</h2>
           <ul>
@@ -64,7 +68,7 @@ const Home: FC = () => {
             {/* <Chat chats={chats} /> */}
           {/*</ul> */}
         </div>
-      </header>
+      </div>
     </div>
   );
 };
